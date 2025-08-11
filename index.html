@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Encoder</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .container {
+            max-width: 900px;
+        }
+        .text-area-output {
+            min-height: 100px;
+        }
+        /* Custom styles for the radio buttons */
+        .custom-radio-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .custom-radio-button {
+            flex-grow: 1;
+            padding: 0.75rem;
+            text-align: center;
+            background-color: #f3f4f6;
+            border-radius: 0.5rem;
+            border: 1px solid #e5e7eb;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        .custom-radio-button:hover {
+            background-color: #e5e7eb;
+        }
+        .custom-radio-button.selected {
+            background-color: #479EE6;
+            color: white;
+            border-color: #479EE6;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        /* Hide the actual radio input element */
+        input[type="radio"] {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <div class="container mx-auto p-8 bg-white rounded-2xl shadow-xl space-y-8">
+        <h1 class="text-4xl font-bold text-center text-gray-800 mb-6">Data Encoder</h1>
+        <p class="text-center text-gray-600 mb-8">
+            Select the options below and click the button to generate an encoded string.
+        </p>
+
+        <!-- Form for user input -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- Age Input -->
+            <div class="flex flex-col">
+                <label for="Age" class="text-sm font-medium text-gray-700 mb-1">Age</label>
+                <input type="number" id="Age" value="" min="0" max="999" placeholder="e.g., 45" class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <!-- Dropdown for Gender -->
+            <div class="flex flex-col">
+                <label for="Gender" class="text-sm font-medium text-gray-700 mb-1">Gender</label>
+                <select id="Gender" class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="">Select an option</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Croissant">Croissant</option>
+                    <option value="Others">Others</option>
+                </select>
+            </div>
+
+            <!-- Dropdown for Profession -->
+            <div class="flex flex-col">
+                <label for="Profession" class="text-sm font-medium text-gray-700 mb-1">Profession</label>
+                <select id="Profession" class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="">Select an option</option>
+                    <option value="Student">Student</option>
+                    <option value="Employee">Employee</option>
+                    <option value="Others">Others</option>
+                </select>
+            </div>
+
+            <!-- Dropdown for MaritalStatus -->
+            <div class="flex flex-col">
+                <label for="MaritalStatus" class="text-sm font-medium text-gray-700 mb-1">Marital Status</label>
+                <select id="MaritalStatus" class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="">Select an option</option>
+                    <option value="Single">Single</option>
+                    <option value="Married">Married</option>
+                    <option value="Divorced">Divorced</option>
+                </select>
+            </div>
+            
+            <!-- Radio Buttons for Yes/No questions -->
+            <div class="flex flex-col">
+                <label class="text-sm font-medium text-gray-700 mb-2">Satisfied Life?</label>
+                <div class="custom-radio-group" data-name="SatisfiedLife">
+                    <input type="radio" id="SatisfiedLifeNo" name="SatisfiedLife" value="No">
+                    <label for="SatisfiedLifeNo" class="custom-radio-button">No</label>
+                    <input type="radio" id="SatisfiedLifeYes" name="SatisfiedLife" value="Yes">
+                    <label for="SatisfiedLifeYes" class="custom-radio-button">Yes</label>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <label class="text-sm font-medium text-gray-700 mb-2">Dropped Activities?</label>
+                <div class="custom-radio-group" data-name="DroppedActivities">
+                    <input type="radio" id="DroppedActivitiesNo" name="DroppedActivities" value="No">
+                    <label for="DroppedActivitiesNo" class="custom-radio-button">No</label>
+                    <input type="radio" id="DroppedActivitiesYes" name="DroppedActivities" value="Yes">
+                    <label for="DroppedActivitiesYes" class="custom-radio-button">Yes</label>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <label class="text-sm font-medium text-gray-700 mb-2">Feel Life Empty?</label>
+                <div class="custom-radio-group" data-name="FeelLifeEmpty">
+                    <input type="radio" id="FeelLifeEmptyNo" name="FeelLifeEmpty" value="No">
+                    <label for="FeelLifeEmptyNo" class="custom-radio-button">No</label>
+                    <input type="radio" id="FeelLifeEmptyYes" name="FeelLifeEmpty" value="Yes">
+                    <label for="FeelLifeEmptyYes" class="custom-radio-button">Yes</label>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <label class="text-sm font-medium text-gray-700 mb-2">Bored?</label>
+                <div class="custom-radio-group" data-name="Bored">
+                    <input type="radio" id="BoredNo" name="Bored" value="No">
+                    <label for="BoredNo" class="custom-radio-button">No</label>
+                    <input type="radio" id="BoredYes" name="Bored" value="Yes">
+                    <label for="BoredYes" class="custom-radio-button">Yes</label>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <label class="text-sm font-medium text-gray-700 mb-2">Feel Helpless?</label>
+                <div class="custom-radio-group" data-name="FeelHelpless">
+                    <input type="radio" id="FeelHelplessNo" name="FeelHelpless" value="No">
+                    <label for="FeelHelplessNo" class="custom-radio-button">No</label>
+                    <input type="radio" id="FeelHelplessYes" name="FeelHelpless" value="Yes">
+                    <label for="FeelHelplessYes" class="custom-radio-button">Yes</label>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <label class="text-sm font-medium text-gray-700 mb-2">Afraid of bad things happening?</label>
+                <div class="custom-radio-group" data-name="AfraidBadHappening">
+                    <input type="radio" id="AfraidBadHappeningNo" name="AfraidBadHappening" value="No">
+                    <label for="AfraidBadHappeningNo" class="custom-radio-button">No</label>
+                    <input type="radio" id="AfraidBadHappeningYes" name="AfraidBadHappening" value="Yes">
+                    <label for="AfraidBadHappeningYes" class="custom-radio-button">Yes</label>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <label class="text-sm font-medium text-gray-700 mb-2">Hopeful about future?</label>
+                <div class="custom-radio-group" data-name="HopefulAboutFuture">
+                    <input type="radio" id="HopefulAboutFutureNo" name="HopefulAboutFuture" value="No">
+                    <label for="HopefulAboutFutureNo" class="custom-radio-button">No</label>
+                    <input type="radio" id="HopefulAboutFutureYes" name="HopefulAboutFuture" value="Yes">
+                    <label for="HopefulAboutFutureYes" class="custom-radio-button">Yes</label>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <label class="text-sm font-medium text-gray-700 mb-2">Spend time happily?</label>
+                <div class="custom-radio-group" data-name="SpendTimeHappily">
+                    <input type="radio" id="SpendTimeHappilyNo" name="SpendTimeHappily" value="No">
+                    <label for="SpendTimeHappilyNo" class="custom-radio-button">No</label>
+                    <input type="radio" id="SpendTimeHappilyYes" name="SpendTimeHappily" value="Yes">
+                    <label for="SpendTimeHappilyYes" class="custom-radio-button">Yes</label>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <label class="text-sm font-medium text-gray-700 mb-2">Feel Energy?</label>
+                <div class="custom-radio-group" data-name="FeelEnergy">
+                    <input type="radio" id="FeelEnergyNo" name="FeelEnergy" value="No">
+                    <label for="FeelEnergyNo" class="custom-radio-button">No</label>
+                    <input type="radio" id="FeelEnergyYes" name="FeelEnergy" value="Yes">
+                    <label for="FeelEnergyYes" class="custom-radio-button">Yes</label>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <label class="text-sm font-medium text-gray-700 mb-2">Prefer to stay home?</label>
+                <div class="custom-radio-group" data-name="PreferStayHome">
+                    <input type="radio" id="PreferStayHomeNo" name="PreferStayHome" value="No">
+                    <label for="PreferStayHomeNo" class="custom-radio-button">No</label>
+                    <input type="radio" id="PreferStayHomeYes" name="PreferStayHome" value="Yes">
+                    <label for="PreferStayHomeYes" class="custom-radio-button">Yes</label>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <label class="text-sm font-medium text-gray-700 mb-2">Memory Loss?</label>
+                <div class="custom-radio-group" data-name="MemoryLoss">
+                    <input type="radio" id="MemoryLossNo" name="MemoryLoss" value="No">
+                    <label for="MemoryLossNo" class="custom-radio-button">No</label>
+                    <input type="radio" id="MemoryLossYes" name="MemoryLoss" value="Yes">
+                    <label for="MemoryLossYes" class="custom-radio-button">Yes</label>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <label class="text-sm font-medium text-gray-700 mb-2">Consider Worthless?</label>
+                <div class="custom-radio-group" data-name="ConsiderWorthless">
+                    <input type="radio" id="ConsiderWorthlessNo" name="ConsiderWorthless" value="No">
+                    <label for="ConsiderWorthlessNo" class="custom-radio-button">No</label>
+                    <input type="radio" id="ConsiderWorthlessYes" name="ConsiderWorthless" value="Yes">
+                    <label for="ConsiderWorthlessYes" class="custom-radio-button">Yes</label>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <label class="text-sm font-medium text-gray-700 mb-2">Cry Most of the time?</label>
+                <div class="custom-radio-group" data-name="CryMostOfTheTime">
+                    <input type="radio" id="CryMostOfTheTimeNo" name="CryMostOfTheTime" value="No">
+                    <label for="CryMostOfTheTimeNo" class="custom-radio-button">No</label>
+                    <input type="radio" id="CryMostOfTheTimeYes" name="CryMostOfTheTime" value="Yes">
+                    <label for="CryMostOfTheTimeYes" class="custom-radio-button">Yes</label>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <label class="text-sm font-medium text-gray-700 mb-2">Reduced appetite and weight loss?</label>
+                <div class="custom-radio-group" data-name="FeelingReduceAppetiteAndLosingWeight">
+                    <input type="radio" id="FeelingReduceAppetiteAndLosingWeightNo" name="FeelingReduceAppetiteAndLosingWeight" value="No">
+                    <label for="FeelingReduceAppetiteAndLosingWeightNo" class="custom-radio-button">No</label>
+                    <input type="radio" id="FeelingReduceAppetiteAndLosingWeightYes" name="FeelingReduceAppetiteAndLosingWeight" value="Yes">
+                    <label for="FeelingReduceAppetiteAndLosingWeightYes" class="custom-radio-button">Yes</label>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <label class="text-sm font-medium text-gray-700 mb-2">Situation Hopeless?</label>
+                <div class="custom-radio-group" data-name="SituationHopeless">
+                    <input type="radio" id="SituationHopelessNo" name="SituationHopeless" value="No">
+                    <label for="SituationHopelessNo" class="custom-radio-button">No</label>
+                    <input type="radio" id="SituationHopelessYes" name="SituationHopeless" value="Yes">
+                    <label for="SituationHopelessYes" class="custom-radio-button">Yes</label>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <label class="text-sm font-medium text-gray-700 mb-2">People better than you?</label>
+                <div class="custom-radio-group" data-name="PeopleBetterThanYou">
+                    <input type="radio" id="PeopleBetterThanYouNo" name="PeopleBetterThanYou" value="No">
+                    <label for="PeopleBetterThanYouNo" class="custom-radio-button">No</label>
+                    <input type="radio" id="PeopleBetterThanYouYes" name="PeopleBetterThanYou" value="Yes">
+                    <label for="PeopleBetterThanYouYes" class="custom-radio-button">Yes</label>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <label class="text-sm font-medium text-gray-700 mb-2">Others would be better if you died?</label>
+                <div class="custom-radio-group" data-name="OthersWouldBetterYouDied">
+                    <input type="radio" id="OthersWouldBetterYouDiedNo" name="OthersWouldBetterYouDied" value="No">
+                    <label for="OthersWouldBetterYouDiedNo" class="custom-radio-button">No</label>
+                    <input type="radio" id="OthersWouldBetterYouDiedYes" name="OthersWouldBetterYouDied" value="Yes">
+                    <label for="OthersWouldBetterYouDiedYes" class="custom-radio-button">Yes</label>
+                </div>
+            </div>
+
+            <!-- Radio Buttons for Graded questions -->
+            <div class="flex flex-col">
+                <label class="text-sm font-medium text-gray-700 mb-2">Avoiding social gatherings?</label>
+                <div class="custom-radio-group" data-name="AvoidingSocialGatherings">
+                    <input type="radio" id="AvoidingSocialGatheringsNotAtAll" name="AvoidingSocialGatherings" value="Not at all">
+                    <label for="AvoidingSocialGatheringsNotAtAll" class="custom-radio-button">Not at all</label>
+                    <input type="radio" id="AvoidingSocialGatheringsSometimes" name="AvoidingSocialGatherings" value="Sometimes">
+                    <label for="AvoidingSocialGatheringsSometimes" class="custom-radio-button">Sometimes</label>
+                    <input type="radio" id="AvoidingSocialGatheringsMostOfTheTimes" name="AvoidingSocialGatherings" value="Most of the times">
+                    <label for="AvoidingSocialGatheringsMostOfTheTimes" class="custom-radio-button">Most of the times</label>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <label class="text-sm font-medium text-gray-700 mb-2">Sleep well?</label>
+                <div class="custom-radio-group" data-name="SleepWell">
+                    <input type="radio" id="SleepWellNotAtAll" name="SleepWell" value="Not at all">
+                    <label for="SleepWellNotAtAll" class="custom-radio-button">Not at all</label>
+                    <input type="radio" id="SleepWellSometimes" name="SleepWell" value="Sometimes">
+                    <label for="SleepWellSometimes" class="custom-radio-button">Sometimes</label>
+                    <input type="radio" id="SleepWellMostOfTheTimes" name="SleepWell" value="Most of the times">
+                    <label for="SleepWellMostOfTheTimes" class="custom-radio-button">Most of the times</label>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <label class="text-sm font-medium text-gray-700 mb-2">Feel bad and guilty?</label>
+                <div class="custom-radio-group" data-name="FeelBadAndGuilty">
+                    <input type="radio" id="FeelBadAndGuiltyNotAtAll" name="FeelBadAndGuilty" value="Not at all">
+                    <label for="FeelBadAndGuiltyNotAtAll" class="custom-radio-button">Not at all</label>
+                    <input type="radio" id="FeelBadAndGuiltySometimes" name="FeelBadAndGuilty" value="Sometimes">
+                    <label for="FeelBadAndGuiltySometimes" class="custom-radio-button">Sometimes</label>
+                    <input type="radio" id="FeelBadAndGuiltyMostOfTheTimes" name="FeelBadAndGuilty" value="Most of the times">
+                    <label for="FeelBadAndGuiltyMostOfTheTimes" class="custom-radio-button">Most of the times</label>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Action button -->
+        <div class="flex justify-center mt-8">
+            <button id="encodeButton" class="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                Encode Data
+            </button>
+        </div>
+
+        <!-- Output section -->
+        <div class="mt-8 space-y-4">
+            <div>
+                <label for="encodedOutput" class="text-sm font-medium text-gray-700">Encoded String</label>
+                <textarea id="encodedOutput" class="text-area-output w-full p-4 mt-1 bg-gray-50 border border-gray-300 rounded-lg font-mono text-gray-800" readonly></textarea>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- The provided encoding map ---
+        const encodingMap = {
+            Gender: {
+                Male: '1', Female: '2', Croissant: '3', Others: '4'
+            },
+            Profession: {
+                Student: '1', Employee: '2', Others: '3'
+            },
+            MaritalStatus: {
+                Single: '1', Married: '2', Divorced: '3'
+            },
+            'Yes/No': {
+                Yes: '1', No: '0'
+            },
+            'Graded': {
+                'Not at all': '1', Sometimes: '2', 'Most of the times': '3'
+            }
+        };
+
+        // --- Question order for consistent encoding ---
+        const questionOrder = [
+            { name: 'Age', type: 'age', size: 3 },
+            { name: 'Gender', type: 'Gender', size: 1 },
+            { name: 'Profession', type: 'Profession', size: 1 },
+            { name: 'MaritalStatus', type: 'MaritalStatus', size: 1 },
+            { name: 'SatisfiedLife', type: 'Yes/No', size: 1 },
+            { name: 'DroppedActivities', type: 'Yes/No', size: 1 },
+            { name: 'FeelLifeEmpty', type: 'Yes/No', size: 1 },
+            { name: 'Bored', type: 'Yes/No', size: 1 },
+            { name: 'FeelHelpless', type: 'Yes/No', size: 1 },
+            { name: 'AfraidBadHappening', type: 'Yes/No', size: 1 },
+            { name: 'HopefulAboutFuture', type: 'Yes/No', size: 1 },
+            { name: 'SpendTimeHappily', type: 'Yes/No', size: 1 },
+            { name: 'FeelEnergy', type: 'Yes/No', size: 1 },
+            { name: 'PreferStayHome', type: 'Yes/No', size: 1 },
+            { name: 'MemoryLoss', type: 'Yes/No', size: 1 },
+            { name: 'ConsiderWorthless', type: 'Yes/No', size: 1 },
+            { name: 'CryMostOfTheTime', type: 'Yes/No', size: 1 },
+            { name: 'FeelingReduceAppetiteAndLosingWeight', type: 'Yes/No', size: 1 },
+            { name: 'SituationHopeless', type: 'Yes/No', size: 1 },
+            { name: 'PeopleBetterThanYou', type: 'Yes/No', size: 1 },
+            { name: 'OthersWouldBetterYouDied', type: 'Yes/No', size: 1 },
+            { name: 'AvoidingSocialGatherings', type: 'Graded', size: 1 },
+            { name: 'SleepWell', type: 'Graded', size: 1 },
+            { name: 'FeelBadAndGuilty', type: 'Graded', size: 1 }
+        ];
+
+        // --- Function to encode user answers into a single string ---
+        function encodeAnswers(answers) {
+            const encodedValues = [];
+            for (const question of questionOrder) {
+                const userAnswer = answers[question.name];
+
+                if (question.type === 'age') {
+                    // For age, we pad it with leading zeros to match the specified size
+                    const paddedAge = String(userAnswer || '').padStart(question.size, '0');
+                    encodedValues.push(paddedAge);
+                } else if (question.type === 'Yes/No' || question.type === 'Graded') {
+                    // For categorical data, use the encodingMap
+                    const categoryMap = encodingMap[question.type];
+                    if (categoryMap && categoryMap[userAnswer] !== undefined) {
+                        encodedValues.push(categoryMap[userAnswer]);
+                    } else {
+                        // Use a placeholder for unselected radio buttons
+                        encodedValues.push('X'); 
+                    }
+                } else {
+                    const categoryMap = encodingMap[question.type];
+                    if (categoryMap && categoryMap[userAnswer] !== undefined) {
+                        encodedValues.push(categoryMap[userAnswer]);
+                    } else {
+                         // Use a placeholder for unselected dropdowns
+                        encodedValues.push('Y'); 
+                    }
+                }
+            }
+            return encodedValues.join('');
+        }
+
+        // --- Event Listeners and UI Logic ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const encodeButton = document.getElementById('encodeButton');
+            const encodedOutput = document.getElementById('encodedOutput');
+
+            // --- Function to get all user inputs from the form ---
+            function getUserAnswers() {
+                const answers = {};
+                for (const question of questionOrder) {
+                    let value;
+                    if (question.type === 'Yes/No' || question.type === 'Graded') {
+                        // For radio buttons, find the checked one by name
+                        const radioElement = document.querySelector(`input[name="${question.name}"]:checked`);
+                        if (radioElement) {
+                            value = radioElement.value;
+                        }
+                    } else {
+                        // For dropdowns and age, get the value directly by id
+                        const element = document.getElementById(question.name);
+                        if (element) {
+                            value = element.value;
+                        }
+                    }
+                    answers[question.name] = value;
+                }
+                return answers;
+            }
+
+            // --- Function to handle radio button selection styling ---
+            function handleRadioSelection(event) {
+                const targetLabel = event.target;
+                const group = targetLabel.closest('.custom-radio-group');
+                if (!group) return;
+
+                // Remove 'selected' class from all buttons in the group
+                const buttons = group.querySelectorAll('.custom-radio-button');
+                buttons.forEach(btn => btn.classList.remove('selected'));
+
+                // Add 'selected' class to the clicked button
+                targetLabel.classList.add('selected');
+
+                // Check the corresponding radio input
+                const inputId = targetLabel.getAttribute('for');
+                const input = document.getElementById(inputId);
+                if (input) {
+                    input.checked = true;
+                }
+            }
+
+            // --- Add event listeners to all custom radio button labels ---
+            const radioLabels = document.querySelectorAll('.custom-radio-button');
+            radioLabels.forEach(label => {
+                label.addEventListener('click', handleRadioSelection);
+            });
+
+            // --- Encode button click handler ---
+            encodeButton.addEventListener('click', () => {
+                const userAnswers = getUserAnswers();
+                const encodedString = encodeAnswers(userAnswers);
+                encodedOutput.value = encodedString;
+            });
+        });
+    </script>
+
+</body>
+</html>
